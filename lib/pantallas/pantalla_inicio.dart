@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:proyecto/pantallas/pantalla_graficos.dart';
 import 'package:proyecto/pantallas/pantalla_ingresos.dart';
+import 'package:proyecto/pantallas/pantalla_movimientos.dart';
 
 class PantallaInicio extends StatelessWidget {
   final box = GetStorage();
@@ -89,7 +90,7 @@ class PantallaInicio extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const PantallaIngresos()),
+                      builder: (context) =>  PantallaMovimientos()),
                 );
               },
             ),
