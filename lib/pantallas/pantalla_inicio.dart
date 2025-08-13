@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:proyecto/pantallas/pantalla_graficos.dart';
 import 'package:proyecto/pantallas/pantalla_ingresos.dart';
 
 class PantallaInicio extends StatelessWidget {
-  const PantallaInicio({super.key});
+  final box = GetStorage();
+   PantallaInicio({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final usuarioActivo= box.read('usuarioActivo');
+    final nombreUsuario =usuarioActivo?['nombre'] ?? 'Usuario';
+
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
@@ -29,8 +35,8 @@ class PantallaInicio extends StatelessWidget {
               color: Colors.green,
             ),
             const SizedBox(height: 20),
-            const Text(
-              "¡Bienvenido!",
+             Text(
+              "¡Bienvenido!, $nombreUsuario!",
               style: TextStyle(
                 fontSize: 32,
                 fontWeight: FontWeight.bold,
@@ -108,7 +114,7 @@ class PantallaInicio extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const PantallaIngresos()),
+                      builder: (context) =>  PantallaGraficos()),
                 );
               },
             ),

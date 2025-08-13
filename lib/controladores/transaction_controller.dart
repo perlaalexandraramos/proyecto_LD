@@ -1,19 +1,29 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
+
 class TransactionController extends GetxController {
   var transacciones = <Map<String, dynamic>>[].obs;
   final box = GetStorage();
+  String? usuarioIdActivo;
 
   @override
   void onInit() {
     super.onInit();
+    final usuarioActivo = box.read('usuarioActivo');
+    usuarioIdActivo = usuarioActivo?['id'];
     cargarTransacciones();
   }
 
   void cargarTransacciones() {
-    var almacenarTransacciones = box.read<List>('transacciones') ?? [];
-    transacciones.assignAll(almacenarTransacciones.cast<Map<String, dynamic>>());
+      var almacenarTransacciones = box.read<List>('transacciones') ?? [];
+    
+    transacciones.assignAll(
+      almacenarTransacciones
+          .cast<Map<String, dynamic>>()
+          .where((t) => t['usuarioId'] == usuarioIdActivo)
+          .toList(),
+    );
   }
 
   void agregarTransaccion({
@@ -24,16 +34,19 @@ class TransactionController extends GetxController {
   }) {
     final nuevaTransaccion = {
       'monto': monto,
-      'categoria': categoria.trim(), // trim para evitar espacios extra
+      'categoria': categoria.trim(),
       'fecha': fecha.toIso8601String(),
       'tipo': tipo,
+      'usuarioId': usuarioIdActivo,
     };
     transacciones.add(nuevaTransaccion);
     guardarTransacciones();
   }
 
   void guardarTransacciones() {
-    box.write('transacciones', transacciones);
+     var almacenarTransacciones = box.read<List>('transacciones') ?? [];
+    almacenarTransacciones.add(transacciones.last);
+    box.write('transacciones', almacenarTransacciones);
   }
 
   List<Map<String, dynamic>> filtrarPorCategoria(String categoria) {
