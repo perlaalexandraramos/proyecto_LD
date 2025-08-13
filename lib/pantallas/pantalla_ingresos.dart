@@ -35,12 +35,10 @@ class _PantallaIngresosState extends State<PantallaIngresos> {
       firstDate: DateTime(2000),
       lastDate: DateTime(2100),
     );
-    if (fechaTomada != null) {
-      setState(() {
-        selectedDate = fechaTomada;
-      });
+    setState(() {
+      selectedDate = fechaTomada;
+    });
     }
-  }
 
   void _guardarTransaccion() {
     if (_formKey.currentState!.validate() && selectedDate != null && categoriaSeleccionada != null) {

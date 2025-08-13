@@ -10,6 +10,8 @@ import 'package:proyecto/registro/pantalla_login.dart';
 import 'package:proyecto/registro/pantalla_registro.dart';
 import 'package:proyecto/controladores/transaction_controller.dart';
 import 'package:proyecto/pantallas/pantalla_graficos.dart';
+import 'package:proyecto/pantallas/pantalla_movimientos.dart';
+
 
 void main() async {
 
@@ -34,6 +36,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/inicio', page: ()=> PantallaInicio()),
         GetPage(name: '/ingresos', page: ()=> PantallaIngresos()),
         GetPage(name: '/Graficos', page: ()=> PantallaGraficos()),
+        GetPage(name: '/movimientos', page: () => PantallaMovimientos()),
 
       ],
     );
