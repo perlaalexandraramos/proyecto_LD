@@ -1,48 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-import '../controladores/movimientos_controller.dart';
-import '../models/movimiento.dart';
+import '../controladores/transaction_controller.dart';
+import 'package:intl/intl.dart';
 
 class PantallaMovimientos extends StatelessWidget {
- final box = GetStorage();
-   PantallaMovimientos({super.key});
-  final MovimientosController controller = Get.put(MovimientosController());
+  PantallaMovimientos({super.key});
+
+  final TransactionController controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Lista de Movimientos'),
+        title: const Text('Lista de Movimientos'),
+        backgroundColor: const Color.fromARGB(255, 245, 231, 105),
       ),
       body: Obx(() {
-        if (controller.movimientos.isEmpty) {
-          return Center(child: Text('No hay movimientos registrados'));
+        if (controller.transacciones.isEmpty) {
+          return const Center(child: Text('No hay movimientos registrados'));
         } else {
           return ListView.builder(
-            itemCount: controller.movimientos.length,
+            itemCount: controller.transacciones.length,
             itemBuilder: (context, index) {
-              Movimiento movimiento = controller.movimientos[index];
+              final t = controller.transacciones[index];
+              final fecha = DateTime.parse(t['fecha']);
               return ListTile(
                 leading: Icon(
-                  movimiento.tipo == 'ingreso'
-                      ? Icons.arrow_downward
-                      : Icons.arrow_upward,
-                  color: movimiento.tipo == 'ingreso'
-                      ? Colors.green
-                      : Colors.red,
+                  t['tipo'] == 'Ingreso' ? Icons.arrow_downward : Icons.arrow_upward,
+                  color: t['tipo'] == 'Ingreso' ? Colors.green : Colors.red,
                 ),
-                title: Text(movimiento.categoria),
-
-                subtitle: Text(
-                movimiento.fecha.toLocal().toString().split(' ')[0],),
-
+                title: Text(t['categoria']),
+                subtitle: Text(DateFormat('dd/MM/yyyy').format(fecha)),
                 trailing: Text(
-                  '\$${movimiento.monto.toStringAsFixed(2)}',
+                  '\$${(t['monto'] as double).toStringAsFixed(2)}',
                   style: TextStyle(
-                    color: movimiento.tipo == 'ingreso'
-                        ? Colors.green
-                        : Colors.red,
+                    color: t['tipo'] == 'Ingreso' ? Colors.green : Colors.red,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

@@ -18,7 +18,6 @@ class PantallaLogin extends StatelessWidget {
       final correoIngresado = correoController.text.trim();
       final contraIngresado = contraController.text.trim();
 
-
       final correoGuardado = box.read('correo');
       final contraGuardada = box.read('contra');
 
