@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:proyecto/pantallas/pantalla_graficos.dart';
 import 'package:proyecto/pantallas/pantalla_ingresos.dart';
 
 class PantallaInicio extends StatelessWidget {
@@ -108,7 +109,7 @@ class PantallaInicio extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const PantallaIngresos()),
+                      builder: (context) => PantallaGraficos()),
                 );
               },
             ),
