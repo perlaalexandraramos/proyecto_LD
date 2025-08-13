@@ -44,7 +44,7 @@ class _PantallaIngresosState extends State<PantallaIngresos> {
 
   void _guardarTransaccion() {
     if (_formKey.currentState!.validate() && selectedDate != null && categoriaSeleccionada != null) {
-      transactionController.AgregarTransacciones(
+      transactionController.agregarTransaccion(
         monto: double.parse(montoController.text), 
         categoria: categoriaSeleccionada!, 
         fecha: selectedDate!, 
@@ -60,8 +60,9 @@ class _PantallaIngresosState extends State<PantallaIngresos> {
       _formKey.currentState!.reset();
       setState(() {
         selectedDate = null;
+        tipoTransaccion = "Ingreso"; 
         categoriaSeleccionada = categoriasPorTipo[tipoTransaccion]!.first;
-        tipoTransaccion = "Ingreso"; // Opcional reset tipo
+      
       });
     } else {
       Get.snackbar(
@@ -81,6 +82,10 @@ class _PantallaIngresosState extends State<PantallaIngresos> {
   @override
   Widget build(BuildContext context) {
     final titulo = tipoTransaccion == "Ingreso" ? "Registrar Ingreso" : "Registrar Gasto";
+
+    if (!categoriasPorTipo[tipoTransaccion]!.contains(categoriaSeleccionada)) {
+  categoriaSeleccionada = categoriasPorTipo[tipoTransaccion]!.first;
+      }   
 
     return Scaffold(
       appBar: AppBar(
@@ -154,7 +159,7 @@ class _PantallaIngresosState extends State<PantallaIngresos> {
 
               DropdownButtonFormField<String>(
                 value: categoriaSeleccionada,
-                items: categoriasPorTipo[tipoTransaccion]!
+                items: (categoriasPorTipo[tipoTransaccion]??[])
                     .map((cat) => DropdownMenuItem(
                           value: cat,
                           child: Text(cat),

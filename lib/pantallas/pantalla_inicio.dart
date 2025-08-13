@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:proyecto/pantallas/pantalla_graficos.dart';
 import 'package:proyecto/pantallas/pantalla_ingresos.dart';
 
 class PantallaInicio extends StatelessWidget {
@@ -90,7 +89,7 @@ class PantallaInicio extends StatelessWidget {
             ),
             const SizedBox(height: 25),
 
-            // Botón para ver gráficos
+         
             ElevatedButton.icon(
               icon: const Icon(Icons.bar_chart_outlined, size: 28, color: Colors.black,),
               label: const Text(
@@ -109,7 +108,7 @@ class PantallaInicio extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => PantallaGraficos()),
+                      builder: (context) => const PantallaIngresos()),
                 );
               },
             ),

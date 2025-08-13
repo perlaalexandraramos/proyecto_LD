@@ -1,58 +1,55 @@
-
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 class TransactionController extends GetxController {
   var transacciones = <Map<String, dynamic>>[].obs;
-  
-   final box = GetStorage();
+  final box = GetStorage();
 
   @override
   void onInit() {
     super.onInit();
-    CargarTransacciones();
+    cargarTransacciones();
   }
 
-  void CargarTransacciones(){
-    var almacenarTransacciones = box.read<List>("Transacciones") ?? [];
+  void cargarTransacciones() {
+    var almacenarTransacciones = box.read<List>('transacciones') ?? [];
     transacciones.assignAll(almacenarTransacciones.cast<Map<String, dynamic>>());
   }
 
-  void AgregarTransacciones({
+  void agregarTransaccion({
     required double monto,
     required String categoria,
     required DateTime fecha,
-    required String tipo, 
+    required String tipo,
   }) {
-
-  final nuevaTransaccion = {
+    final nuevaTransaccion = {
       'monto': monto,
-      'categoria': categoria,
+      'categoria': categoria.trim(), // trim para evitar espacios extra
       'fecha': fecha.toIso8601String(),
       'tipo': tipo,
     };
-     transacciones.add(nuevaTransaccion);
-    GuardarTransacciones();
+    transacciones.add(nuevaTransaccion);
+    guardarTransacciones();
   }
 
-  void GuardarTransacciones(){
+  void guardarTransacciones() {
     box.write('transacciones', transacciones);
   }
 
-    List<Map<String, dynamic>> filtrarporCategoria(String categoria) {
+  List<Map<String, dynamic>> filtrarPorCategoria(String categoria) {
     return transacciones
-        .where((t) => t['categoria'] == categoria)
+        .where((t) => t['categoria'] == categoria.trim())
         .toList();
   }
 
-  // Filtrar por fecha
   List<Map<String, dynamic>> filtrarPorFecha(DateTime date) {
     return transacciones
-        .where((t) =>
-            DateTime.parse(t['Fecha']).day == date.day &&
-            DateTime.parse(t['date']).month == date.month &&
-            DateTime.parse(t['date']).year == date.year)
+        .where((t) {
+          final fechaTransaccion = DateTime.parse(t['fecha']);
+          return fechaTransaccion.day == date.day &&
+              fechaTransaccion.month == date.month &&
+              fechaTransaccion.year == date.year;
+        })
         .toList();
   }
-  
 }
