@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       title: "Control de gastos",
       initialRoute: '/',
       getPages: [
-        GetPage(name: '/', page: ()=> PantallaInicio()),
+        GetPage(name: '/', page: ()=> PantallaPrincipal()),
         GetPage(name: '/registro', page: ()=> PantallaRegistro()),
         GetPage(name: '/login', page: ()=> PantallaLogin()),
         GetPage(name: '/inicio', page: ()=> PantallaInicio()),
